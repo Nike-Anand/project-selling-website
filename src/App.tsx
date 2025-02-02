@@ -1,33 +1,33 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useEffect } from 'react';
-import Layout from './components/Layout';
-import AuthGuard from './components/AuthGuard';
-import Login from './pages/Login';
-import Cart from './pages/Cart';
-import Checkout from './pages/Checkout';
-import CheckoutSuccess from './pages/CheckoutSuccess';
-import { supabase } from './lib/supabase';
-import { useAuthStore } from './lib/store';
-import AdminPage from './pages/AdminPage';
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { useEffect } from "react"
+import Layout from "./components/Layout"
+import AuthGuard from "./components/AuthGuard"
+import Login from "./pages/Login"
+import Cart from "./pages/Cart"
+import Checkout from "./pages/Checkout"
+import CheckoutSuccess from "./pages/CheckoutSuccess"
+import { supabase } from "./lib/supabase"
+import { useAuthStore } from "./lib/store"
+import AdminPage from "./pages/AdminPage"
 
 function App() {
-  const setUser = useAuthStore((state) => state.setUser);
+  const setUser = useAuthStore((state) => state.setUser)
 
   useEffect(() => {
     // Check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-    });
+      setUser(session?.user ?? null)
+    })
 
     // Listen for auth changes
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
+      setUser(session?.user ?? null)
+    })
 
-    return () => subscription.unsubscribe();
-  }, [setUser]);
+    return () => subscription.unsubscribe()
+  }, [setUser])
 
   return (
     <BrowserRouter>
@@ -37,7 +37,7 @@ function App() {
           {/* Public routes */}
           <Route index element={<div>Home Page</div>} />
           <Route path="projects/:id" element={<div>Project Details</div>} />
-          
+
           {/* Protected routes */}
           <Route
             path="dashboard"
@@ -72,16 +72,17 @@ function App() {
             }
           />
           <Route
-              path="admin"
-              element={
-                <AuthGuard requireAdmin>
-                  <AdminPage /> 
-                </AuthGuard>
+            path="admin"
+            element={
+              <AuthGuard requireAdmin>
+                <AdminPage />
+              </AuthGuard>
             }
           />
         </Route>
       </Routes>
     </BrowserRouter>
-  );
+  )
 }
-export default App;
+export default App
+
