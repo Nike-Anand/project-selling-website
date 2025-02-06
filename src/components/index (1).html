@@ -1,0 +1,243 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   TPro Admin
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+ </head>
+ <body class="bg-gray-100 font-sans antialiased flex flex-col min-h-screen">
+  <div class="flex-grow flex">
+   <!-- Sidebar -->
+   <div class="bg-[#201F31] text-white w-64 space-y-6 py-7 px-2 hidden md:block">
+    <div class="text-center text-2xl font-bold">
+     Admin Panel
+    </div>
+    <nav class="space-y-2 ">
+     <a class="flex items-center space-x-2 py-2 px-4 bg-blue-700 rounded-md" href="#">
+      <i class="fas fa-tachometer-alt  ">
+      </i>
+      <span >
+       Dashboard
+      </span>
+     </a>
+     <a class="flex items-center space-x-2 py-2 px-4 bg-blue-700 rounded-md" href="#">
+      <i class="fas fa-chart-line">
+      </i>
+      <span>
+       Analytics
+      </span>
+     </a>
+     <a class="flex items-center space-x-2 py-2 px-4 bg-blue-800 rounded-md" href="#">
+      <i class="fas fa-shopping-cart">
+      </i>
+      <span>
+       eCommerce
+      </span>
+     </a>
+    </nav>
+    <div class="text-sm text-gray-400 px-4">
+     APPS
+    </div>
+    <nav class="space-y-2">
+     <a class="flex items-center space-x-2 py-2 px-4 bg-blue-800 rounded-md" href="#">
+      <i class="fas fa-envelope">
+      </i>
+      <span>
+       Email
+      </span>
+     </a>
+     <a class="flex items-center space-x-2 py-2 px-4 bg-blue-800 rounded-md" href="#">
+      <i class="fas fa-comments">
+      </i>
+      <span>
+       Chat
+      </span>
+     </a>
+     <a class="flex items-center space-x-2 py-2 px-4 bg-blue-800 rounded-md" href="#">
+      <i class="fas fa-check-square">
+      </i>
+      <span>
+       Todo
+      </span>
+     </a>
+     <a class="flex items-center space-x-2 py-2 px-4 bg-blue-800 rounded-md" href="#">
+      <i class="fas fa-calendar-alt">
+      </i>
+      <span>
+       Calendar
+      </span>
+     </a>
+     <a class="flex items-center space-x-2 py-2 px-4 bg-blue-800 rounded-md" href="#">
+      <i class="fas fa-user">
+      </i>
+      <span>
+       User
+      </span>
+     </a>
+    </nav>
+  
+   
+   </div>
+   <!-- Main content -->
+   <div class="flex-1 flex flex-col">
+    <!-- Top bar -->
+    <div class="flex items-center justify-between bg-[#201F31] p-4 shadow-md">
+     <div class="flex items-center space-x-4">
+      <i class="fas fa-bars text-white md:hidden">
+      </i>
+      <div class="relative">
+       <input class="bg-gray-200 rounded-full pl-10 pr-4 py-2 focus:outline-none" placeholder="Search..." type="text"/>
+       <i class="fas fa-search absolute left-3 top-2.5 text-gray-600">
+       </i>
+      </div>
+     </div>
+     <div class="flex items-center space-x-4">
+     
+      <i class="fas fa-bell text-white">
+      </i>
+      <i class="fas fa-cog text-white">
+      </i>
+      <div class="flex items-center space-x-2">
+       <img alt="User avatar" class="w-10 h-10 rounded-full" height="40" src="https://storage.googleapis.com/a1aa/image/TZ_jDcLvFRP-ePGutekiMu7xIYmhUaMJ6bygbc6N_D4.jpg" width="40"/>
+       <div>
+        <div class="text-white font-semibold ">
+         Anand
+        </div>
+        <div class="text-xs text-gray-500">
+         Available
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <!-- Dashboard content -->
+    <div class=" bg-[#201F31] p-6 space-y-6 ">
+     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-[#201F31] ">
+      <div class="bg-violet-400 p-4 rounded-lg shadow-md ">
+       <div class="flex items-center justify-between">
+        <div>
+         <div class="text-black">
+          Subscribers Gained
+         </div>
+         <div class="text-2xl font-semibold">
+          92.6k
+         </div>
+        </div>
+        <i class="fas fa-users text-white text-3xl">
+        </i>
+       </div>
+       <img alt="Graph showing subscribers gained" class="mt-4" height="100" src="https://storage.googleapis.com/a1aa/image/WnbozYEx8-kGN1FIVB5Qe01VJ9kdi1t60a8Pxfm9AYY.jpg" width="200"/>
+      </div>
+      <div class="bg-violet-400 p-4 rounded-lg shadow-md">
+       <div class="flex items-center justify-between">
+        <div>
+         <div class="text-black">
+          Orders Received
+         </div>
+         <div class="text-2xl font-semibold">
+          97.5k
+         </div>
+        </div>
+        <i class="fas fa-shopping-cart text-white text-3xl">
+        </i>
+       </div>
+       <img alt="Graph showing orders received" class="mt-4" height="100" src="https://storage.googleapis.com/a1aa/image/PDBek_cJVRYJnGPswQNqedTJb78yue2o6C2VYPVpBcg.jpg" width="200"/>
+      </div>
+      <div class="bg-violet-400 p-4 rounded-lg shadow-md">
+       <div class="flex items-center justify-between">
+        <div>
+         <div class="text-black">
+          Avg Sessions
+         </div>
+         <div class="text-2xl font-semibold">
+          2.7k
+         </div>
+         <div class="text-green-900 text-sm">
+          +5.2% vs last 7 days
+         </div>
+        </div>
+        <i class="fas fa-chart-bar text-white text-3xl">
+        </i>
+       </div>
+       <img alt="Graph showing average sessions" class="mt-4" height="100" src="https://storage.googleapis.com/a1aa/image/cdqoX7G5kJPRMzEU2ht3h6taRgFMr6Xc-Vie1pfa33s.jpg" width="200"/>
+       <button class="mt-4 bg-blue-500 text-white py-2 px-4 rounded-full">
+        View Details
+       </button>
+       <div class="mt-4 space-y-2">
+        <div class="flex justify-between text-sm">
+         <span>
+          Goal: 1000000
+         </span>
+         <span>
+          Users: 100k
+         </span>
+        </div>
+        <div class="flex justify-between text-sm">
+         <span>
+          Retention: 90%
+         </span>
+         <span>
+          Duration: 1yr
+         </span>
+        </div>
+       </div>
+      </div>
+      <div class="bg-violet-400 p-4 rounded-lg shadow-md">
+       <div class="flex items-center justify-between">
+        <div>
+         <div class="text-black">
+          Support Tracker
+         </div>
+         <div class="text-2xl font-semibold">
+          163
+         </div>
+        </div>
+        <i class="fas fa-life-ring text-white text-3xl">
+        </i>
+       </div>
+       <img alt="Graph showing support tracker" class="mt-4" height="100" src="https://storage.googleapis.com/a1aa/image/bwRJ6NZqdIshZObA-y4UKsL3L5vXlqWtrJYD1eINPCI.jpg" width="200"/>
+       <div class="mt-4 text-center">
+        <div class="text-3xl font-semibold">
+         83%
+        </div>
+        <div class="text-gray-500">
+         Completed Tickets
+        </div>
+       </div>
+       <div class="mt-4 flex justify-between text-sm">
+        <div>
+         <div class="text-gray-500">
+          New Tickets
+         </div>
+         <div class="text-xl font-semibold">
+          29
+         </div>
+        </div>
+        <div>
+         <div class="text-gray-500">
+          Open Tickets
+         </div>
+         <div class="text-xl font-semibold">
+          63
+         </div>
+        </div>
+        <div>
+         <div class="text-gray-500">
+          Response Time
+         </div>
+         <div class="text-xl font-semibold">
+          1d
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </body>
+</html>
