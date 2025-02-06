@@ -1,7 +1,5 @@
 import React from 'react';
-
 import { ChevronDown } from 'lucide-react';
-
 
 export default function Sidebar() {
   return (
@@ -59,8 +57,4 @@ export default function Sidebar() {
       </div>
     </div>
   );
-
 }
-
-}
-

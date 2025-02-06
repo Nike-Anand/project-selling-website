@@ -9,7 +9,6 @@ import CheckoutSuccess from "./pages/CheckoutSuccess"
 import { supabase } from "./lib/supabase"
 import { useAuthStore } from "./lib/store"
 import AdminPage from "./pages/AdminPage"
-import Admin_page from "./pages/admin_page"
 
 function App() {
   const setUser = useAuthStore((state) => state.setUser)

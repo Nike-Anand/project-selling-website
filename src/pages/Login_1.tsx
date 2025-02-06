@@ -1,64 +1,65 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { supabase } from "../lib/supabase";
-import { useAuthStore } from "../lib/store";
+import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { supabase } from "../lib/supabase"
+import { useAuthStore } from "../lib/store"
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
-  const setUser = useAuthStore((state) => state.setUser);
-  const setIsAdmin = useAuthStore((state) => state.setIsAdmin);
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("")
+  const navigate = useNavigate()
+  const setUser = useAuthStore((state) => state.setUser)
+  const setIsAdmin = useAuthStore((state) => state.setIsAdmin)
 
   useEffect(() => {
     const checkAdminStatus = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-
-      if (user?.email === "nikeanand97@gmail.com") {
-        setIsAdmin(true);
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
+      if (user && user.email === "nikeannad97@gmail.com") {
+        setIsAdmin(true)
       } else {
-        setIsAdmin(false);
+        setIsAdmin(false)
       }
-    };
+    }
 
-    checkAdminStatus();
-  }, [setIsAdmin]);
+    checkAdminStatus()
+  }, [setIsAdmin])
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError("");
+    e.preventDefault()
+    setIsLoading(true)
+    setError("")
 
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
-      });
+      })
 
-      console.log("Login data:", data);
-      console.log("Login error:", error);
+      console.log("Login data:", data) // Debugging log
+      console.log("Login error:", error) // Debugging log
 
-      if (error) throw error;
+      if (error) throw error
 
-      setUser(data.user);
+      setUser(data.user)
 
-      if (data.user?.email === "nikeanand97@gmail.com") {
-        setIsAdmin(true);
-        console.log("Admin user logged in");
-        navigate("/admin");
+      if (data.user && data.user.email === "nikeanand97@gmail.com") {
+        setIsAdmin(true)
+        console.log("Admin user logged in") // Debugging log
+        navigate("/admin")
       } else {
-        setIsAdmin(false);
-        console.log("Non-admin user logged in");
-        navigate("/");
+        setIsAdmin(false)
+        console.log("Non-admin user logged in") // Debugging log
+        navigate("/")
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
+      setError(err instanceof Error ? err.message : "An error occurred")
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
@@ -119,5 +120,6 @@ export default function Login() {
         </form>
       </div>
     </div>
-  );
+  )
 }
+
