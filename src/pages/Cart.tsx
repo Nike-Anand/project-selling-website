@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom';
 import { Trash2, ShoppingBag } from 'lucide-react';
 import { useCartStore } from '../lib/store';
@@ -5,6 +6,18 @@ import { useCartStore } from '../lib/store';
 export default function Cart() {
   const { items, removeItem } = useCartStore(); // Removed clearCart
   const navigate = useNavigate();
+=======
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Trash2, ShoppingBag } from 'lucide-react';
+import { useCartStore } from '../lib/store';
+import { supabase } from '../lib/supabase';
+
+export default function Cart() {
+  const { items, removeItem, clearCart } = useCartStore();
+  const navigate = useNavigate();
+  const [isProcessing, setIsProcessing] = useState(false);
+>>>>>>> 3af26f0d75406a4bf246460b95a5193a23c9dba6
 
   const total = items.reduce((sum, item) => sum + item.price, 0);
 
@@ -59,13 +72,24 @@ export default function Cart() {
             </div>
             <button
               onClick={handleCheckout}
+<<<<<<< HEAD
               className="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg hover:bg-indigo-700"
             >
               Proceed to Checkout
+=======
+              disabled={isProcessing}
+              className="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg hover:bg-indigo-700 disabled:opacity-50"
+            >
+              {isProcessing ? 'Processing...' : 'Proceed to Checkout'}
+>>>>>>> 3af26f0d75406a4bf246460b95a5193a23c9dba6
             </button>
           </div>
         </div>
       )}
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 3af26f0d75406a4bf246460b95a5193a23c9dba6

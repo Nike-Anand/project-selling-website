@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCartStore, useAuthStore } from '../lib/store';
 import { supabase } from '../lib/supabase';
 
+<<<<<<< HEAD
 interface RazorpayOptions {
   key: string;
   amount: number;
@@ -25,6 +26,11 @@ declare global {
         open: () => void;
       };
     };
+=======
+declare global {
+  interface Window {
+    Razorpay: any;
+>>>>>>> 3af26f0d75406a4bf246460b95a5193a23c9dba6
   }
 }
 
@@ -36,6 +42,10 @@ export default function Checkout() {
   const [error, setError] = useState('');
 
   const total = items.reduce((sum, item) => sum + item.price, 0);
+<<<<<<< HEAD
+=======
+  // Convert to paise (Indian currency)
+>>>>>>> 3af26f0d75406a4bf246460b95a5193a23c9dba6
   const amountInPaise = Math.round(total * 100);
 
   const handlePayment = async () => {
@@ -44,15 +54,28 @@ export default function Checkout() {
     setError('');
 
     try {
+<<<<<<< HEAD
       const options: RazorpayOptions = {
+=======
+      // Initialize Razorpay
+      const options = {
+>>>>>>> 3af26f0d75406a4bf246460b95a5193a23c9dba6
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount: amountInPaise,
         currency: "INR",
         name: "ProjectHub",
         description: "Project Purchase",
+<<<<<<< HEAD
         handler: async function (response: { razorpay_payment_id: string }) { // Specify type for response
           try {
             const { error: purchaseError } = await supabase
+=======
+        handler: async function (response: any) {
+          try {
+            // Verify payment with your backend
+            // Create purchase records
+            const { data: purchases, error: purchaseError } = await supabase
+>>>>>>> 3af26f0d75406a4bf246460b95a5193a23c9dba6
               .from('purchases')
               .insert(
                 items.map((item) => ({
@@ -61,10 +84,19 @@ export default function Checkout() {
                   amount: item.price,
                   payment_id: response.razorpay_payment_id
                 }))
+<<<<<<< HEAD
               );
 
             if (purchaseError) throw purchaseError;
 
+=======
+              )
+              .select();
+
+            if (purchaseError) throw purchaseError;
+
+            // Generate download links
+>>>>>>> 3af26f0d75406a4bf246460b95a5193a23c9dba6
             const downloadLinks = await Promise.all(
               items.map(async (item) => {
                 const { data } = await supabase
@@ -79,6 +111,10 @@ export default function Checkout() {
               })
             );
 
+<<<<<<< HEAD
+=======
+            // Clear cart and redirect to success page
+>>>>>>> 3af26f0d75406a4bf246460b95a5193a23c9dba6
             clearCart();
             navigate('/checkout/success', {
               state: { downloadLinks },
@@ -89,7 +125,11 @@ export default function Checkout() {
           }
         },
         prefill: {
+<<<<<<< HEAD
           email: user.email || '', // Ensure email is a string
+=======
+          email: user.email,
+>>>>>>> 3af26f0d75406a4bf246460b95a5193a23c9dba6
         },
         theme: {
           color: "#4F46E5"
@@ -150,4 +190,8 @@ export default function Checkout() {
       </div>
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 3af26f0d75406a4bf246460b95a5193a23c9dba6

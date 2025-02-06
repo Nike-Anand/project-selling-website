@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../lib/store";
@@ -24,11 +25,23 @@ const AdminPage = () => {
     category: "",
     technologies: [],
   });
+=======
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { useAuthStore } from "../lib/store"
+import { supabase } from "../lib/supabase"
+
+const AdminPage = () => {
+  const navigate = useNavigate()
+  const isAdmin = useAuthStore((state) => state.isAdmin)
+  const setIsAdmin = useAuthStore((state) => state.setIsAdmin)
+>>>>>>> 3af26f0d75406a4bf246460b95a5193a23c9dba6
 
   useEffect(() => {
     const checkAdminStatus = async () => {
       const {
         data: { user },
+<<<<<<< HEAD
       } = await supabase.auth.getUser();
       if (user && user.email === "nikeanand97@gmail.com") {
         setIsAdmin(true);
@@ -97,6 +110,22 @@ const AdminPage = () => {
 
   if (!isAdmin) {
     return null; // Prevent rendering the page while checking admin status
+=======
+      } = await supabase.auth.getUser()
+      if (user && user.email === "nikeanand97@gmail.com") {
+        setIsAdmin(true)
+      } else {
+        setIsAdmin(false)
+        navigate("/login")
+      }
+    }
+
+    checkAdminStatus()
+  }, [navigate, setIsAdmin])
+
+  if (!isAdmin) {
+    return null // Prevent rendering the page while checking admin status
+>>>>>>> 3af26f0d75406a4bf246460b95a5193a23c9dba6
   }
 
   return (
@@ -104,6 +133,7 @@ const AdminPage = () => {
       <header>
         <h1>Admin Dashboard</h1>
       </header>
+<<<<<<< HEAD
       <aside>
         <h2>Project Management</h2>
         <form onSubmit={(e) => { e.preventDefault(); handleAddProject(); }}>
@@ -173,3 +203,13 @@ const AdminPage = () => {
 };
 
 export default AdminPage;
+=======
+      <aside>{/* Sidebar content */}</aside>
+      <main>{/* Main content */}</main>
+    </div>
+  )
+}
+
+export default AdminPage
+
+>>>>>>> 3af26f0d75406a4bf246460b95a5193a23c9dba6
