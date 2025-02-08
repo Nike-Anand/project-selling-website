@@ -9,6 +9,8 @@ import CheckoutSuccess from "./pages/CheckoutSuccess"
 import { supabase } from "./lib/supabase"
 import { useAuthStore } from "./lib/store"
 import AdminPage from "./pages/AdminPage"
+import CourseForm from "./pages/addprojects"
+import AdminPageContent from "./pages/AdminPageContent"
 import Admin_page from "./pages/admin_page"
 
 function App() {
@@ -73,10 +75,14 @@ function App() {
             }
           />
           <Route
+            path="addprojects"
+            element={<CourseForm />}
+          />
+          <Route
             path="admin"
             element={
               <AuthGuard requireAdmin>
-                <AdminPage />
+                <AdminPageContent />
               </AuthGuard>
             }
           />
@@ -86,4 +92,3 @@ function App() {
   )
 }
 export default App
-
