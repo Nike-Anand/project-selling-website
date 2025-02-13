@@ -1,7 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { Search, ShoppingCart, Heart, User, Moon } from 'lucide-react';
 
 export default function Navbar() {
+  const navigate = useNavigate(); // Define navigate using useNavigate
+
   return (
     <nav className="fixed top-0 w-full bg-white shadow-sm z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -25,10 +28,16 @@ export default function Navbar() {
             <button className="p-2 hover:bg-gray-100 rounded-full">
               <Moon className="h-5 w-5" />
             </button>
-            <button className="p-2 hover:bg-gray-100 rounded-full">
+            <button 
+              onClick={() => navigate('/wishlist')} // Add onClick handler for wishlist navigation
+              className="p-2 hover:bg-gray-100 rounded-full"
+            >
               <Heart className="h-5 w-5" />
             </button>
-            <button className="p-2 hover:bg-gray-100 rounded-full">
+            <button 
+              onClick={() => navigate('/cart')} // Add onClick handler for cart navigation
+              className="p-2 hover:bg-gray-100 rounded-full"
+            >
               <ShoppingCart className="h-5 w-5" />
             </button>
             <button className="p-2 hover:bg-gray-100 rounded-full">

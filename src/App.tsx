@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import RemoveProjects from "./pages/RemoveProjects"
+import ECommerceApp from "./pages/homepage"
 import { useEffect } from "react"
 import Layout from "./components/Layout"
 import AuthGuard from "./components/AuthGuard"
@@ -12,6 +14,7 @@ import AdminPage from "./pages/AdminPage"
 import CourseForm from "./pages/addprojects"
 import AdminPageContent from "./pages/AdminPageContent"
 import Admin_page from "./pages/admin_page"
+import Wishlist from "./pages/Wishlist"
 
 function App() {
   const setUser = useAuthStore((state) => state.setUser)
@@ -38,23 +41,27 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Layout />}>
           {/* Public routes */}
-          <Route index element={<div>Home Page</div>} />
+          <Route index element={<ECommerceApp />} />
           <Route path="projects/:id" element={<div>Project Details</div>} />
 
           {/* Protected routes */}
           <Route
-            path="dashboard"
-            element={
-              <AuthGuard>
-                <div>User Dashboard</div>
-              </AuthGuard>
-            }
+            path="RemoveProjects"
+            element={<RemoveProjects />}
           />
           <Route
             path="cart"
             element={
               <AuthGuard>
                 <Cart />
+              </AuthGuard>
+            }
+          />
+            <Route
+            path="wishlist"
+            element={
+              <AuthGuard>
+                <Wishlist />
               </AuthGuard>
             }
           />

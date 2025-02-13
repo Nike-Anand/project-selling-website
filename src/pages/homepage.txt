@@ -1,0 +1,129 @@
+homepage.txt
+
+import React, { useEffect, useState } from 'react';
+import { ShoppingCart, Heart } from 'lucide-react';
+import { supabase } from '../lib/supabase';
+
+const ECommerceApp = () => {
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('projects')
+          .select('*');
+
+        if (error) throw error;
+
+        setProducts(data);
+      } catch (error) {
+        console.error("Error fetching products:", error); // Log error to console
+        setError((error as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const [cart, setCart] = useState<any[]>([]);
+  const [wishlist, setWishlist] = useState<any[]>([]);
+
+  const addToCart = (product: any) => {
+    const existingItem = cart.find(item => item.id === product.id);
+    if (existingItem) {
+      setCart(cart.map(item => 
+        item.id === product.id 
+          ? {...item, quantity: item.quantity + 1} 
+          : item
+      ));
+    } else {
+      setCart([...cart, {...product, quantity: 1}]);
+    }
+  };
+
+  const addToWishlist = (product: any) => {
+    if (!wishlist.some(item => item.id === product.id)) {
+      setWishlist([...wishlist, product]);
+    }
+  };
+
+  const removeFromCart = (productId: string) => {
+    setCart(cart.filter(item => item.id !== productId));
+  };
+
+  const removeFromWishlist = (productId: string) => {
+    setWishlist(wishlist.filter(item => item.id !== productId));
+  };
+
+  const calculateTotal = () => {
+    return cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
+  };
+
+  return (
+    <div className="container mx-auto p-4">
+      <header className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold">Projects</h1>
+        <div className="flex space-x-4">
+          <div className="relative">
+            <Heart className="text-red-500 cursor-pointer" />
+            {wishlist.length > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                {wishlist.length}
+              </span>
+            )}
+          </div>
+          <div className="relative">
+            <ShoppingCart className="text-blue-500 cursor-pointer" />
+            {cart.length > 0 && (
+              <span className="absolute -top-2 -right-2 bg-blue-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                {cart.length}
+              </span>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {loading ? (
+        <p>Loading products...</p>
+      ) : error ? (
+        <p>Error fetching products: {error}</p>
+      ) : (
+        <main className="grid grid-cols-3 gap-4">
+          {products.map(product => (
+            <div key={product.id} className="border rounded-lg p-4 shadow-md">
+              <img 
+                src={product.image} 
+                alt={product.title} 
+                className="w-full h-48 object-cover mb-4"
+              />
+              <h2 className="text-xl font-semibold">{product.title}</h2>
+              <p className="text-gray-600 mb-2">{product.description}</p>
+              <p className="text-lg font-bold mb-4">${product.price}</p>
+              <div className="flex justify-between">
+                <button 
+                  onClick={() => addToCart(product)}
+                  className="bg-blue-500 text-white px-4 py-2 rounded flex items-center"
+                >
+                  <ShoppingCart className="mr-2" size={20} /> Add to Cart
+                </button>
+                <button 
+                  onClick={() => addToWishlist(product)}
+                  className="bg-red-500 text-white px-4 py-2 rounded flex items-center"
+                >
+                  <Heart className="mr-2" size={20} /> Wishlist
+                </button>
+              </div>
+            </div>
+          ))}
+        </main>
+      )}
+    </div>
+  );
+};
+
+export default ECommerceApp;

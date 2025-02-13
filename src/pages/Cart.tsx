@@ -1,11 +1,14 @@
 import { useState } from 'react';
+import type { Project } from '../types';
+
 import { useNavigate } from 'react-router-dom';
-import { Trash2, ShoppingBag } from 'lucide-react';
-import { useCartStore } from '../lib/store';
+import { Trash2, ShoppingBag, Heart } from 'lucide-react';
+import { useCartStore, useWishlistStore } from '../lib/store';
 import { supabase } from '../lib/supabase';
 
 export default function Cart() {
   const { items, removeItem, clearCart } = useCartStore();
+  const { addItem: addToWishlist } = useWishlistStore();
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -15,7 +18,21 @@ export default function Cart() {
     navigate('/checkout');
   };
 
+const handleAddToWishlist = (item: Project) => {
+    console.log('Adding to wishlist:', item);
+    console.log('Current cart items before adding to wishlist:', items);
+
+
+
+    addToWishlist(item);
+    // Optionally, show a notification or feedback to the user
+  };
+
+console.log('Current cart items:', items);
+console.log('Total items in cart:', items.length);
+
   return (
+
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <h1 className="text-2xl font-bold mb-8 dark:text-white">Shopping Cart</h1>
       
@@ -46,12 +63,18 @@ export default function Cart() {
                 <p className="text-gray-500 dark:text-gray-400">{item.description}</p>
               </div>
               <div className="text-right">
-                <p className="text-lg font-bold dark:text-white">${item.price}</p>
+                <p className="text-lg font-bold dark:text-white">₹{item.price}</p>
                 <button
                   onClick={() => removeItem(item.id)}
                   className="text-red-500 hover:text-red-700"
                 >
                   <Trash2 className="h-5 w-5" />
+                </button>
+                <button
+                  onClick={() => handleAddToWishlist(item)}
+                  className="text-green-500 hover:text-green-700 ml-2"
+                >
+                  <Heart className="h-5 w-5" />
                 </button>
               </div>
             </div>
@@ -60,7 +83,7 @@ export default function Cart() {
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
             <div className="flex justify-between mb-4">
               <span className="text-lg font-medium dark:text-white">Total:</span>
-              <span className="text-2xl font-bold dark:text-white">${total.toFixed(2)}</span>
+              <span className="text-2xl font-bold dark:text-white">₹{total.toFixed(2)}</span>
             </div>
             <button
               onClick={handleCheckout}

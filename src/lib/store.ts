@@ -23,20 +23,39 @@ interface CartState {
   clearCart: () => void;
 }
 
-export const useCartStore = create<CartState>((set) => ({
-  items: [],
-  addItem: (project) =>
-    set((state) => ({
-      items: state.items.some((item) => item.id === project.id)
-        ? state.items
-        : [...state.items, project],
-    })),
-  removeItem: (projectId) =>
-    set((state) => ({
-      items: state.items.filter((item) => item.id !== projectId),
-    })),
-  clearCart: () => set({ items: [] }),
-}));
+export const useCartStore = create<CartState>((set) => {
+  const storedItems = localStorage.getItem('cartItems');
+console.log('Initializing cart items from localStorage:', storedItems);
+  const initialItems = storedItems ? JSON.parse(storedItems) : [];
+  
+  return {
+    items: initialItems,
+    addItem: (project: Project) => {
+      console.log('Adding item to cart:', project);
+console.log('Current items in local storage before adding:', localStorage.getItem('cartItems'));
+      console.log('Current items in local storage after adding:', localStorage.getItem('cartItems'));
+      set((state) => {
+        const updatedItems = state.items.some((item) => item.id === project.id)
+          ? state.items
+          : [...state.items, project];
+        localStorage.setItem('cartItems', JSON.stringify(updatedItems));
+      console.log('Current items in local storage:', localStorage.getItem('cartItems'));
+        return { items: updatedItems };
+      });
+    },
+    removeItem: (projectId: string) => {
+      set((state) => {
+        const updatedItems = state.items.filter((item) => item.id !== projectId);
+        localStorage.setItem('cartItems', JSON.stringify(updatedItems));
+        return { items: updatedItems };
+      });
+    },
+    clearCart: () => {
+      set({ items: [] });
+      localStorage.removeItem('cartItems');
+    },
+  };
+});
 
 interface WishlistState {
   items: Project[];
@@ -57,4 +76,3 @@ export const useWishlistStore = create<WishlistState>((set) => ({
       items: state.items.filter((item) => item.id !== projectId),
     })),
 }));
-

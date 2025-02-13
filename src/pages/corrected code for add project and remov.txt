@@ -1,3 +1,4 @@
+corrected code for add project and remove project 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../lib/store";
@@ -182,7 +183,9 @@ const AdminPage = () => {
             <Book className="w-6 h-6" />
             Admin Dashboard
           </CardTitle>
-          
+          <CardDescription>
+            Manage your projects and courses
+          </CardDescription>
         </CardHeader>
 
         <CardContent>
@@ -351,7 +354,36 @@ const AdminPage = () => {
             </div>
           </form>
 
-         
+          <div className="mt-8">
+            <h2 className="text-xl font-semibold mb-4">Existing Projects</h2>
+            <div className="space-y-4">
+              {projects.map((project) => (
+                <Card key={project.id}>
+                  <CardContent className="p-4">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <h3 className="text-lg font-medium">{project.title}</h3>
+                        <p className="text-gray-600 mt-1">{project.description}</p>
+                        <div className="mt-2 space-y-1">
+                          <p>Price: ${project.price}</p>
+                          <p>Category: {project.category}</p>
+                          <p>Difficulty: {project.difficulty_level}</p>
+                          <p>Rating: {project.rating}/5</p>
+                          <p>Technologies: {project.technologies?.join(", ")}</p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => handleRemoveProject(project.id)}
+                        className="px-3 py-1 text-red-600 border border-red-600 rounded-md hover:bg-red-50"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
         </CardContent>
       </Card>
     </div>
