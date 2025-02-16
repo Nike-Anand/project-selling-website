@@ -10,10 +10,10 @@ import Checkout from "./pages/Checkout"
 import CheckoutSuccess from "./pages/CheckoutSuccess"
 import { supabase } from "./lib/supabase"
 import { useAuthStore } from "./lib/store"
-import AdminPage from "./pages/AdminPage"
+import SignInPage from "./pages/signinpage"
 import CourseForm from "./pages/addprojects"
 import AdminPageContent from "./pages/AdminPageContent"
-import Admin_page from "./pages/admin_page"
+
 import Wishlist from "./pages/Wishlist"
 
 function App() {
@@ -48,6 +48,14 @@ function App() {
           <Route
             path="RemoveProjects"
             element={<RemoveProjects />}
+          />
+          <Route
+            path="SignInPage"
+            element={
+              <AuthGuard>
+                <SignInPage />
+              </AuthGuard>
+            }
           />
           <Route
             path="cart"
