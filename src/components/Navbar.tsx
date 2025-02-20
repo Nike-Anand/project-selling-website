@@ -1,11 +1,14 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Search, ShoppingCart, Heart, User, Moon } from 'lucide-react';
-import { useCartStore } from '../lib/store';
+import { useCartStore, useAuthStore } from '../lib/store';
 import { useWishlistStore } from '../lib/store';
+import { supabase } from '../lib/supabase';
 
 export default function Navbar() {
-  const navigate = useNavigate(); // Define navigate using useNavigate
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+  const { user } = useAuthStore();
 
   return (
     <nav className="fixed top-0 w-full bg-white shadow-sm z-50">
@@ -60,12 +63,50 @@ export default function Navbar() {
                 </span>
               )}
             </button>
-            <button 
-              onClick={() => navigate('/SignInPage')} // Add onClick handler for cart navigation
-              className="p-2 hover:bg-gray-100 rounded-full relative"
-            >
-              <User className="h-5 w-5" />
-            </button>
+            {user ? (
+              <div className="relative">
+                <button 
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="p-2 hover:bg-gray-100 rounded-full relative"
+                >
+                  <span className="mr-2 max-w-[120px] truncate">{user.email}</span>
+                  <User className="h-5 w-5" />
+                </button>
+                {isDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                    <div className="py-1">
+                      <button
+                        onClick={() => {
+                          setIsDropdownOpen(false);
+                          navigate('/user');
+                        }}
+                        className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left"
+                      >
+                        User Profile
+                      </button>
+                      <button
+                        onClick={async () => {
+                          await supabase.auth.signOut();
+                          useAuthStore.getState().logout();
+                          setIsDropdownOpen(false);
+                          navigate('/authenticationpage');
+                        }}
+                        className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button
+                onClick={() => navigate('/authenticationpage')}
+                className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700"
+              >
+                Login
+              </button>
+            )}
           </div>
         </div>
       </div>

@@ -11,7 +11,7 @@ export default function AuthGuard({ children, requireAdmin = false }: AuthGuardP
   const { user, isAdmin } = useAuthStore();
 
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/authenticationpage" replace />;
   }
 
   if (requireAdmin && !isAdmin) {

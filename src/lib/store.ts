@@ -7,6 +7,7 @@ interface AuthState {
   isAdmin: boolean;
   setUser: (user: User | null) => void;
   setIsAdmin: (isAdmin: boolean) => void;
+  logout: () => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -14,6 +15,9 @@ export const useAuthStore = create<AuthState>((set) => ({
   isAdmin: false,
   setUser: (user) => set({ user }),
   setIsAdmin: (isAdmin) => set({ isAdmin }),
+  logout: () => {
+    set({ user: null, isAdmin: false });
+  }
 }));
 
 interface CartState {
