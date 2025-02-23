@@ -14,7 +14,7 @@ import SignInPage from "./pages/signinpage"
 import CourseForm from "./pages/addprojects"
 import AdminPageContent from "./pages/AdminPageContent"
 import AdminDashboard from "./pages/AdminDashboard"
-
+import Login from "./pages/Login"
 import Wishlist from "./pages/Wishlist"
 import UserPage from "./pages/UserPage"
 
@@ -39,23 +39,19 @@ function App() {
 
   const { user } = useAuthStore();
 
-
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/authenticationpage" element={user ? <Navigate to="/" /> : <AuthPage />} />
+        <Route path="/login" element={user ? <Navigate to="/admin/content" /> : <Login />} />
         <Route path="/" element={<Layout />}>
           {/* Public routes */}
           <Route index element={<ECommerceApp />} />
           <Route path="products" element={<ECommerceApp />} />
-
           <Route path="projects/:id" element={<div>Project Details</div>} />
 
           {/* Protected routes */}
-          <Route
-            path="RemoveProjects"
-            element={<RemoveProjects />}
-          />
+          <Route path="RemoveProjects" element={<RemoveProjects />} />
           <Route
             path="SignInPage"
             element={
@@ -72,7 +68,7 @@ function App() {
               </AuthGuard>
             }
           />
-            <Route
+          <Route
             path="wishlist"
             element={
               <AuthGuard>
@@ -96,15 +92,12 @@ function App() {
               </AuthGuard>
             }
           />
-          <Route
-            path="addprojects"
-            element={<CourseForm />}
-          />
+          <Route path="addprojects" element={<CourseForm />} />
           <Route
             path="admin"
             element={
               <AuthGuard requireAdmin>
-                <AdminPageContent />
+                <Navigate to="/admin/content" replace />
               </AuthGuard>
             }
           />
@@ -113,6 +106,14 @@ function App() {
             element={
               <AuthGuard requireAdmin>
                 <AdminDashboard />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="admin/content"
+            element={
+              <AuthGuard requireAdmin>
+                <AdminPageContent />
               </AuthGuard>
             }
           />
